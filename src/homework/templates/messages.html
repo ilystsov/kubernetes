@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Messages</title>
+</head>
+<body>
+    <h1>Messages</h1>
+    <button onclick="window.location.href='/message_creation';">Add New Message</button>
+    {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li><strong>{{ message.author }}</strong>: {{ message.body }} <br> <small>{{ message.date }}</small></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No messages yet.</p>
+    {% endif %}
+</body>
+</html>
