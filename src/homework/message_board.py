@@ -24,36 +24,27 @@ def get_db() -> Generator[Session, None, None]:
         db.close()
 
 
-@app.get('/messages')
-async def get_messages(
-        request: Request,
-        db: Session = Depends(get_db)
-) -> Response:
+@app.get("/messages")
+async def get_messages(request: Request, db: Session = Depends(get_db)) -> Response:
     messages = crud.fetch_messages(db)
     return templates.TemplateResponse(
-        "messages.html",
-        {"request": request, "messages": messages}
+        "messages.html", {"request": request, "messages": messages}
     )
 
 
-@app.post('/messages')
+@app.post("/messages")
 async def create_message(
-        request: Request,
-        author: str = Form(...),
-        body: str = Form(...),
-        db: Session = Depends(get_db)
+    request: Request,
+    author: str = Form(...),
+    body: str = Form(...),
+    db: Session = Depends(get_db),
 ) -> Response:
     new_message = crud.create_message(db, author, body)
     return templates.TemplateResponse(
-        "message_creation.html",
-        {"request": request, "message": new_message}
+        "message_creation.html", {"request": request, "message": new_message}
     )
 
 
-@app.get('/message_creation')
+@app.get("/message_creation")
 async def get_message_creation_form(request: Request) -> Response:
-    return templates.TemplateResponse(
-        "message_creation.html",
-        {"request": request}
-    )
-
+    return templates.TemplateResponse("message_creation.html", {"request": request})
