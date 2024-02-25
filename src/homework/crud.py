@@ -1,6 +1,5 @@
-# crud.py
 from sqlalchemy.orm import Session
-from . import models, schemas
+from . import models
 
 
 def fetch_messages(db: Session):

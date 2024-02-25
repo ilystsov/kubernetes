@@ -1,0 +1,11 @@
+secretGenerator:
+- name: db-secret
+  literals:
+  - username=username
+  - password=password
+  - dbname=mydatabase
+  - host=db
+resources:
+  - db-deployment.yaml
+  - server-deployment.yaml
+  - prometheus-deployment.yaml

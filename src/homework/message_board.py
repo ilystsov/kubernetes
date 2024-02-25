@@ -1,4 +1,3 @@
-# message_board.py
 from fastapi import FastAPI, Depends, Form
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
@@ -26,19 +25,35 @@ def get_db():
 
 
 @app.get('/messages')
-async def get_messages(request: Request, db: Session = Depends(get_db)) -> HTMLResponse:
+async def get_messages(
+        request: Request,
+        db: Session = Depends(get_db)
+) -> HTMLResponse:
     messages = crud.fetch_messages(db)
-    return templates.TemplateResponse("messages.html", {"request": request, "messages": messages})
+    return templates.TemplateResponse(
+        "messages.html",
+        {"request": request, "messages": messages}
+    )
 
 
 @app.post('/messages')
-async def create_message(request: Request, author: str = Form(...), body: str = Form(...), db: Session = Depends(get_db)):
+async def create_message(
+        request: Request,
+        author: str = Form(...),
+        body: str = Form(...),
+        db: Session = Depends(get_db)
+):
     new_message = crud.create_message(db, author, body)
-    return templates.TemplateResponse("message_creation.html", {"request": request, "message": new_message})
+    return templates.TemplateResponse(
+        "message_creation.html",
+        {"request": request, "message": new_message}
+    )
 
 
 @app.get('/message_creation')
 async def get_message_creation_form(request: Request) -> HTMLResponse:
-    return templates.TemplateResponse("message_creation.html", {"request": request})
-
+    return templates.TemplateResponse(
+        "message_creation.html",
+        {"request": request}
+    )
 

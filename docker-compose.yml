@@ -8,8 +8,6 @@ services:
       - "8000:8000"
     env_file:
       - .env
-    volumes:
-      - .:/opt/app
     depends_on:
       - db
 
@@ -18,7 +16,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     env_file:
-      - ".env"
+      - .env
     ports:
       - "5432:5432"
 
